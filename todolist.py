@@ -53,6 +53,12 @@ def deleteTask():
             savelist()
             print(f"Task '{taskdel}' has been removed.")
             return
+        
+#Set piority of the tasks
+def set_piority():
+    user_search_term = input("Configure piority of task")
+    print(user_search_term)
+    return
 
 #Show todo list
 def showlist():
@@ -72,13 +78,15 @@ def showlist():
 #Main menu
 def listprompt():
     while True:
-        userinput = input("Add, delete, show, or quit? ").lower()
+        userinput = input("Add, delete, show, configure or quit? ").lower()
 
         if userinput in ("add", "a", "+"):
             insertTask()
         elif userinput in ("delete", "d", "-"):
             deleteTask()
         elif userinput in ("show", "s"):
+            showlist()
+        elif userinput.lower in ("configure", "c", "edit"):
             showlist()
         elif userinput in ("quit", "q", "exit", "stop"):
             #print("Goodbye!")
