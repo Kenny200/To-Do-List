@@ -1,10 +1,18 @@
 # Ken's Todo List Program
+import datetime
+
+x = datetime.datetime.now()
+print(x.strftime("%x"))
+print(type(x))
+print(x)
 
 try:
     with open("mylist.txt", "r", encoding="utf-8") as f:
         todo_list = [line.strip() for line in f]
 except FileNotFoundError:
     todo_list = []
+
+
 
 
 def savelist():
@@ -14,6 +22,8 @@ def savelist():
 
 
 def insertTask():
+    global x
+
     while True:
         task = input("Insert task (or type quit/back): ").strip()
 
@@ -27,7 +37,8 @@ def insertTask():
         elif task in todo_list:
             print("Task already exists.")
         else:
-            todo_list.append(task)
+            format_task = f"{task}, {x.strftime("%x")}"
+            todo_list.append(format_task)
             savelist()
             print(f"Task '{task}' has been added.")
 
@@ -56,9 +67,12 @@ def deleteTask():
         
 #Set piority of the tasks
 def set_piority():
-    user_search_term = input("Configure piority of task")
-    print(user_search_term)
-    return
+    # TODO: requires more intermediate concpets to implement feature
+    print("Priority configuration not yet implemented.")
+
+#set 
+def time():
+    print("Time")
 
 #Show todo list
 def showlist():
@@ -86,10 +100,10 @@ def listprompt():
             deleteTask()
         elif userinput in ("show", "s"):
             showlist()
-        elif userinput.lower in ("configure", "c", "edit"):
-            showlist()
+        elif userinput in ("configure", "c", "edit"):
+            set_piority()
         elif userinput in ("quit", "q", "exit", "stop"):
-            #print("Goodbye!")
+            print("Goodbye!")
             break
         else:
             print("Invalid input, please try again.")
