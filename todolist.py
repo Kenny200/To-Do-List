@@ -1,29 +1,53 @@
 # Ken's Todo List Program
-import datetime
+import os
+import sys
+from pathlib import Path
 
-x = datetime.datetime.now()
-print(x.strftime("%x"))
-print(type(x))
-print(x)
+todo_path = Path.cwd()
+print(todo_path)
+#os.makedirs
 
-try:
-    with open("mylist.txt", "r", encoding="utf-8") as f:
-        todo_list = [line.strip() for line in f]
-except FileNotFoundError:
-    todo_list = []
-
+#Start up Menu (W.I.P)
+Menu_banner = r"""
+------------------
+1) View Saved Lists
+2) Open List
+3) Create List
+3) Delete list
+4) Exit
+------------------
+"""
+print(Menu_banner)
+main_menu_option = int(input("\nChoose a option: "))
+if main_menu_option == 1:
+    print("Option not available at the moment")
+if main_menu_option == 2:
+    print("Option not available at the moment")
+if main_menu_option == 3:
+    name_of_file = input("What would you like to name the file to save: ")
+    try:
+        with open(name_of_file, "r", encoding="utf-8") as f:
+            todo_list = [line.strip() for line in f]
+    except FileNotFoundError:
+        todo_list = []
+if main_menu_option == 4:
+    file_to_del = input("Which file do you want to delete?")
+    try:
+        if os.path.exists(file_to_del):
+            os.remove(file_to_del)
+    except FileNotFoundError:
+        print(f"File: {file_to_del} does not exist")
+    
 
 
 
 def savelist():
-    with open("mylist.txt", "w", encoding="utf-8") as f:
+    with open(name_of_file, "w", encoding="utf-8") as f:
         for task in todo_list:
             f.write(task + "\n")
 
 
 def insertTask():
-    global x
-
     while True:
         task = input("Insert task (or type quit/back): ").strip()
 
@@ -37,8 +61,7 @@ def insertTask():
         elif task in todo_list:
             print("Task already exists.")
         else:
-            format_task = f"{task}, {x.strftime("%x")}"
-            todo_list.append(format_task)
+            todo_list.append(task)
             savelist()
             print(f"Task '{task}' has been added.")
 
@@ -69,10 +92,12 @@ def deleteTask():
 def set_piority():
     # TODO: requires more intermediate concpets to implement feature
     print("Priority configuration not yet implemented.")
-
-#set 
-def time():
-    print("Time")
+    
+    
+#enumartate def
+def enumarate_tasks():
+    for index, item in enumerate(todo_list):
+        print("Task" + str(index) + ' is: ' + item)
 
 #Show todo list
 def showlist():
@@ -92,7 +117,7 @@ def showlist():
 #Main menu
 def listprompt():
     while True:
-        userinput = input("Add, delete, show, configure or quit? ").lower()
+        userinput = input("Add, delete, show, configure, or quit? ").lower()
 
         if userinput in ("add", "a", "+"):
             insertTask()
@@ -102,6 +127,8 @@ def listprompt():
             showlist()
         elif userinput in ("configure", "c", "edit"):
             set_piority()
+        elif userinput in ("enum"):
+            enumarate_tasks()
         elif userinput in ("quit", "q", "exit", "stop"):
             print("Goodbye!")
             break
